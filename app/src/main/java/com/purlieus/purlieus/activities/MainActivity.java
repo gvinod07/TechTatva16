@@ -1,11 +1,15 @@
 package com.purlieus.purlieus.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+
 import com.microsoft.windowsazure.mobileservices.*;
-import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
-import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 import com.purlieus.purlieus.R;
 import com.purlieus.purlieus.models.TodoItem;
 
@@ -14,6 +18,9 @@ import java.net.MalformedURLException;
 public class MainActivity extends AppCompatActivity {
 
     private MobileServiceClient mClient;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +28,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar()!=null) {
+            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        }
+
+        navigationView = (NavigationView)findViewById(R.id.navigation_drawer);
+        navigationView.getMenu().findItem(R.id.nav_menu_categories).setChecked(true);
+        drawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
 
         try{
             mClient = new MobileServiceClient("https://purlieus.azurewebsites.net", this);
@@ -31,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         TodoItem item = new TodoItem();
         item.Text="First item";
-        mClient.getTable(TodoItem.class).insert(item, new TableOperationCallback<TodoItem>() {
+        /*mClient.getTable(TodoItem.class).insert(item, new TableOperationCallback<TodoItem>() {
             @Override
             public void onCompleted(TodoItem entity, Exception exception, ServiceFilterResponse response) {
                 if (exception == null) {
@@ -40,8 +58,36 @@ public class MainActivity extends AppCompatActivity {
                     // Insert failed
                 }
             }
-        });
+        });*/
 
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                invalidateOptionsMenu();
+            }
+        };
+        drawerLayout.addDrawerListener(mDrawerToggle);
+        drawerLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mDrawerToggle.syncState();
+            }
+        });
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerToggle.syncState();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(mDrawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
