@@ -59,7 +59,7 @@
             android:layout_height="@dimen/icon_size"
             android:layout_marginLeft="@dimen/padding_default"
             android:src="@drawable/ic_right"
-            android:tint="@color/colorPrimary"
+            android:tint="?attr/colorPrimary"
             />
 
     </LinearLayout>
@@ -122,7 +122,7 @@
             android:layout_height="@dimen/icon_size"
             android:layout_marginLeft="@dimen/padding_default"
             android:src="@drawable/ic_right"
-            android:tint="@color/colorPrimary"
+            android:tint="?attr/colorPrimary"
             />
 
     </LinearLayout>
@@ -184,7 +184,7 @@
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_marginLeft="@dimen/padding_default"
-            android:tint="@color/colorPrimary"
+            android:tint="?attr/colorPrimary"
             android:src="@drawable/ic_right"
             />
 

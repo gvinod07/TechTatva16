@@ -76,7 +76,7 @@
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:src="@drawable/ic_right"
-                android:tint="@color/colorPrimary"
+                android:tint="?attr/colorPrimary"
                 android:layout_alignRight="@+id/Address"
                 android:layout_alignParentEnd="true"/>
         </RelativeLayout>

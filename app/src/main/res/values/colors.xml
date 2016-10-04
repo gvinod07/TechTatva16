@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#00796b</color>
-    <color name="colorAccent">#ff5722</color>
-    <color name="colorPrimaryLight">#b2dfdb</color>
+    <color name="teal">#009688</color>
+    <color name="teal_dark">#00796b</color>
+    <color name="orange_deep">#ff5722</color>
+    <color name="teal_light">#b2dfdb</color>
+
+    <color name="red_material">#f44336</color>
+    <color name="red_material_dark">#d32f2f</color>
+    <color name="amber">#ffc107</color>
+    <color name="red_material_light">#ffcdd2</color>
+
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#757575</color>
     <color name="dividerColor">#BDBDBD</color>
@@ -15,4 +21,5 @@
     <color name="slightlyDarkerBlue">#1976d2</color>
     <color name="green_dark">#388e3c</color>
     <color name="almost_white">#EEEEEE</color>
+
 </resources>
