@@ -11,6 +11,7 @@
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
     <color name="cyan_dark">#0097a7</color>
+    <color name="green"> #4caf50</color>
     <color name="slightlyDarkerBlue">#1976d2</color>
     <color name="green_dark">#388e3c</color>
     <color name="almost_white">#EEEEEE</color>

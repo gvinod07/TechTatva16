@@ -1,0 +1,86 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.purlieus.purlieus.fragments.DetailsFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:padding="@dimen/padding_default"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/typography_body"
+            android:hint="Name"
+            android:backgroundTint="#009688"/>
+
+        <EditText
+            android:id="@+id/Sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sex"
+            android:textSize="@dimen/typography_body"
+            android:layout_below="@+id/Name"/>
+
+        <EditText
+            android:id="@+id/Age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Age"
+            android:textSize="@dimen/typography_body"
+            android:layout_below="@id/Sex"/>
+
+        <EditText
+            android:id="@+id/BloodGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Blood Group"
+            android:textSize="@dimen/typography_body"
+            android:layout_below="@id/Age"/>
+
+        <EditText
+            android:id="@+id/Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-Mail"
+            android:textSize="@dimen/typography_body"
+            android:layout_below="@+id/BloodGroup"/>
+
+        <EditText
+            android:id="@+id/Contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contact Number"
+            android:textSize="@dimen/typography_body"
+            android:layout_below="@+id/Email"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Contact"
+            android:paddingTop="@dimen/padding_default"
+            android:paddingBottom="@dimen/padding_default">
+            <TextView
+                android:id="@+id/Address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter Address"
+                android:textSize="@dimen/typography_body"/>
+            <ImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_right"
+                android:tint="@color/colorPrimary"
+                android:layout_alignRight="@+id/Address"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>
