@@ -2,15 +2,14 @@ package com.purlieus.purlieus.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.microsoft.windowsazure.mobileservices.*;
 import com.purlieus.purlieus.R;
@@ -38,6 +37,17 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         }
+
+        View contentMain = findViewById(R.id.main_content);
+        LinearLayout health = (LinearLayout)contentMain.findViewById(R.id.health_linear_layout);
+
+        health.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BloodDonationActivity.class);
+                startActivity(intent);
+            }
+        });
 
         navigationView = (NavigationView)findViewById(R.id.navigation_drawer);
         navigationView.getMenu().findItem(R.id.nav_menu_categories).setChecked(true);
@@ -83,20 +93,6 @@ public class MainActivity extends AppCompatActivity {
         });
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch(item.getItemId()){
-                    case R.id.nav_menu_profile:{
-                        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                        startActivity(intent);
-                    }
-                }
-                return true;
-            }
-        });
     }
 
     @Override

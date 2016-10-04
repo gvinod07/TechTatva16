@@ -15,6 +15,24 @@
     <string name="about">About</string>
     <string name="title_activity_maps">Map</string>
 
+    <string name="blood_donation">Blood Donation</string>
+    <string name="select_blood_group_recipient">Blood Group of Recipient:</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="description_edit_privacy">The app will broadcast the details from the user profile to all matched users within proximity, unless the data is made private.</string>
+    <string name="make_details_public">Make Details Public</string>
+    <string name="make_details_private">Make Details Private</string>
+    <string name="set_privacy">Private Donation</string>
+    <string name="continue_seek">Continue</string>
+    <string name="seekers_unavailable">Currently, there are no public seekers in your proximity.</string>
+    <string name="seeker_notified">You will be notified once any seeker is available in your area.</string>
+    <string name="set_urgency">Urgent Seek</string>
+    <string name="description_edit_urgency">Enable/Disable this mode according to the condition of the patient seeking blood.</string>
+    <string name="select_blood_group_donor">Blood Group of Donor:</string>
+    <string name="donate">Donate</string>
+
+    <string name="donors_unavailable">Currently, there are no public donors in your proximity.</string>
+    <string name="donor_notified">All available donors in your area have been notified. Check back later for public donors.</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

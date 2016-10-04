@@ -27,14 +27,6 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener {
 
     private GoogleMap mMap;
-    private List<LatLng> points = new LinkedList<>();
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finishAffinity();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,25 +37,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        final ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        /**mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.setBuildingsEnabled(true);
-        mMap.setIndoorEnabled(true);
-        mMap.setTrafficEnabled(true);*/
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider overriding
-            // public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-            // to handle the case where the user grants the permission.
 
-            // Permissions strings to access user's location
             String[] permissions = new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -87,21 +69,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMyLocationChange(final Location location) {
         final LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
-        // Add visited point to list
-        points.add(currentLocation);
-
         // Remove all previous markers
         mMap.clear();
         // Redraw first & last marker
         mMap.addMarker(new MarkerOptions().position(currentLocation).title("You are here"));
-        mMap.addMarker(new MarkerOptions().position(points.get(0)).title("You started here"));
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
-
-        final Polyline polyline = mMap.addPolyline(new PolylineOptions().add(currentLocation));
-        polyline.setWidth(5);
-        polyline.setColor(getResources().getColor(R.color.green));
-        // Redraw polyline with all visited points
-        polyline.setPoints(points);
     }
 }
