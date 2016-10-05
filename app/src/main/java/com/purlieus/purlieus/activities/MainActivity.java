@@ -9,11 +9,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.microsoft.windowsazure.mobileservices.*;
+import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
+import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 import com.purlieus.purlieus.R;
 import com.purlieus.purlieus.models.TodoItem;
 
@@ -64,17 +67,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         TodoItem item = new TodoItem();
-        item.Text="First item";
-        /*mClient.getTable(TodoItem.class).insert(item, new TableOperationCallback<TodoItem>() {
+        item.Text="Second item";
+        mClient.getTable(TodoItem.class).insert(item, new TableOperationCallback<TodoItem>() {
             @Override
             public void onCompleted(TodoItem entity, Exception exception, ServiceFilterResponse response) {
                 if (exception == null) {
                     // Insert succeeded
+                    Log.d("Seek", "successful main");
                 } else {
-                    // Insert failed
+                    exception.printStackTrace();
+                    Log.d("Seek", "exception in main");
                 }
             }
-        });*/
+        });
 
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close){
             @Override
