@@ -5,6 +5,6 @@ package com.purlieus.purlieus.models;
  */
 public class TodoItem {
 
-    public String Id;
+    public String Id="1";
     public String Text;
 }
