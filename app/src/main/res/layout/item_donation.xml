@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -28,9 +28,9 @@
                 />
 
             <TextView
+                android:id="@+id/donor_name_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/name_item_seek_urgent"
                 tools:text="@string/app_name"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/black"
@@ -49,10 +49,10 @@
             android:layout_gravity="center_vertical"/>
 
         <TextView
+            android:id="@+id/donor_blood_group_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/app_name"
-            android:id="@+id/BloodGroup_item_urgent_seek"
             android:fontFamily="sans-serif"
             android:textSize="@dimen/typography_subheading"
             android:layout_weight="0.000002"
@@ -89,9 +89,9 @@
                     android:paddingTop="@dimen/padding_default"/>
 
                 <TextView
+                    android:id="@+id/donor_contact_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/phone_item_seek_urgent"
                     tools:text="@string/app_name"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
@@ -118,9 +118,9 @@
                     android:paddingTop="@dimen/padding_default"
                     android:paddingBottom="@dimen/padding_default" />
                 <TextView
+                    android:id="@+id/donor_sex_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sex_item_seek_urgent"
                     tools:text="@string/app_name"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
@@ -140,10 +140,10 @@
                     android:textSize="@dimen/typography_subheading" />
 
                 <TextView
+                    android:id="@+id/donor_age_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="@string/app_name"
-                    android:id="@+id/age_item_urgent_seek"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
                     android:textSize="@dimen/typography_body"
