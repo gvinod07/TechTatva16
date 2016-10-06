@@ -37,6 +37,27 @@
     <string name="donors_unavailable">Currently, there are no public donors in your proximity.</string>
     <string name="donor_notified">All available donors in your area have been notified. Check back later for public donors.</string>
 
+    <string name="profile_name">Name</string>
+    <string name="profile_sex">Sex</string>
+    <string name="profile_age">Age</string>
+    <string name="profile_blood_group">Blood Group</string>
+    <string name="email">E-mail</string>
+    <string name="profile_contact">Contact</string>
+    <string name="select_address">Select Address</string>
+    <string name="select_bg">Blood Group:</string>
+    <string name="input_details">Input Details</string>
+    <string name="submit_details">Submit</string>
+    <string name="save_details">Save</string>
+    <string name="details">Details</string>
+    <string name="age_display">Age:</string>
+    <string name="sex_display">Sex:</string>
+    <string name="phone_display">Phone:</string>
+    <string name="email_display">E-mail:</string>
+    <string name="address_display">Address:</string>
+    <string name="address">Address</string>
+    <string name="enter_details">Enter Details</string>
+    <string name="phone">Phone</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

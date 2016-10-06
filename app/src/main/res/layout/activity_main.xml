@@ -38,6 +38,7 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/content_navigation_header"
         app:itemIconTint="?attr/colorPrimary"
+        app:itemBackground="?attr/selectableItemBackground"
         app:menu="@menu/menu_navigation">
 
 
