@@ -6,8 +6,6 @@
         <item name="colorPrimary">@color/teal</item>
         <item name="colorPrimaryDark">@color/teal_dark</item>
         <item name="colorAccent">@color/orange_deep</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="colorControlActivated">@color/teal</item>
         <item name="android:dropDownListViewStyle">@style/App.Style.Spinner</item>
     </style>
@@ -20,6 +18,12 @@
         <item name="windowNoTitle">true</item>
         <item name="colorControlActivated">@color/red_material</item>
         <item name="android:dropDownListViewStyle">@style/App.Style.Spinner</item>
+    </style>
+
+    <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">?attr/colorPrimary</item>
+        <item name="colorControlActivated">?attr/colorPrimaryDark</item>
+        <item name="colorControlHighlight">?attr/colorPrimaryDark</item>
     </style>
 
 
