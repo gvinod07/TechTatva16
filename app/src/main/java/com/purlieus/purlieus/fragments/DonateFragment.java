@@ -236,15 +236,13 @@ public class DonateFragment extends Fragment {
                         newList.remove(seeker);
                 }
 
-                /*if(newList.isEmpty())
+                if(newList.isEmpty())
                 {
-                    Log.d("is", "Empty!");
                     emptyListCondition.setVisibility(View.VISIBLE);
                     usersRecyclerView.setVisibility(View.GONE);
                 }
-                else
-                {
-                    for (int i=0; i<newList.size(); i++){
+                else {
+                    /*for (int i=0; i<newList.size(); i++){
 
                         locationB.setLatitude(Double.parseDouble(newList.get(i).getLatitude()));
                         locationB.setLongitude(Double.parseDouble(newList.get(i).getLongitude()));
@@ -256,12 +254,13 @@ public class DonateFragment extends Fragment {
 
                     Collections.sort(newList, new CustomComparator());
                     donorResult.clear();*/
+                    donorResult.clear();
+                    donorResult.addAll(newList);
 
-                donorResult.addAll(newList);
-
-                donorAdapter.notifyDataSetChanged();
-                emptyListCondition.setVisibility(View.GONE);
-                usersRecyclerView.setVisibility(View.VISIBLE);
+                    donorAdapter.notifyDataSetChanged();
+                    emptyListCondition.setVisibility(View.GONE);
+                    usersRecyclerView.setVisibility(View.VISIBLE);
+                }
 
             }
 

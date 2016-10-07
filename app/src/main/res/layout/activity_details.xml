@@ -5,12 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/details_fragment_container"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/details_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </RelativeLayout>
+
+    </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:text="@string/save_details"
-            android:background="?attr/colorPrimary"
+            android:background="@color/teal"
             android:textColor="@color/white" />
 
     </RelativeLayout>

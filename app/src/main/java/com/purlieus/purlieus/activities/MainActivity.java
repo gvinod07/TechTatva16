@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        SharedPreferences sp = getSharedPreferences(Purlieus.PROFILE_DATA, MODE_PRIVATE);
+        final SharedPreferences sp = getSharedPreferences(Purlieus.PROFILE_DATA, MODE_PRIVATE);
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null) {
@@ -106,16 +106,18 @@ public class MainActivity extends AppCompatActivity {
 
         View headerView = navigationView.getHeaderView(0);
 
-        TextView profileName = (TextView)headerView.findViewById(R.id.username_text_view);
-        TextView profileLocation = (TextView)headerView.findViewById(R.id.user_location_text_view);
+        final TextView profileName = (TextView)headerView.findViewById(R.id.username_text_view);
+        final TextView profileLocation = (TextView)headerView.findViewById(R.id.user_location_text_view);
 
-        profileName.setText(sp.getString("Name", ""));
-        profileLocation.setText(sp.getString("Location", ""));
+        profileName.setText(sp.getString("name", ""));
+        profileLocation.setText("Blood Group: "+sp.getString("bg", ""));
 
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close){
             @Override
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
+                profileName.setText(sp.getString("name", ""));
+                profileLocation.setText("Blood Group: "+sp.getString("bg", ""));
             }
 
             @Override
