@@ -35,6 +35,8 @@ import com.purlieus.purlieus.models.BD_Seek;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -48,7 +50,6 @@ public class SeekFragment extends Fragment {
     private Spinner spinner;
     public static final String PROFILE_DATA="profile";
     private MobileServiceClient mClient;
-    Context context;
     SeekAdapter seekAdapter;
     List<BD_Donate> donorResult = new ArrayList<>();
     List<BD_Donate> mList;
@@ -68,8 +69,6 @@ public class SeekFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = getActivity().getSharedPreferences(PROFILE_DATA, Context.MODE_PRIVATE);
-
-        progressDialog = new ProgressDialog(context);
         
         seeker = new BD_Seek();
         seeker.setName(sp.getString("name",""));
@@ -87,14 +86,15 @@ public class SeekFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_seek, container, false);
 
         emptyListCondition = (LinearLayout) view.findViewById(R.id.no_donors_layout);
-        fullListCondition = (LinearLayout) view.findViewById(R.id.donate_tab);
+        fullListCondition = (LinearLayout) view.findViewById(R.id.seek_tab);
+
+        progressDialog = new ProgressDialog(getActivity());
 
         spinner = (Spinner)view.findViewById(R.id.bg_spinner);
         String[] groups = {"O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, groups);
         spinner.setAdapter(adapter);
-        
-        final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.seek_tab);
+
         SwitchCompat sc = (SwitchCompat)view.findViewById(R.id.urgent_seek_switch);
 
         try{
@@ -153,8 +153,9 @@ public class SeekFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 usersRecyclerView.setVisibility(View.VISIBLE);
-                linearLayout.setVisibility(View.GONE);
+                fullListCondition.setVisibility(View.GONE);
                 mClient.getTable(BD_Seek.class).insert(seeker);
+                progressDialog.show();
                 new SeekFragment.FetchTask().execute(mClient);
             }
         });
@@ -162,23 +163,22 @@ public class SeekFragment extends Fragment {
         return view;
     }
 
+    public void loadDonors(){
+        new FetchTask().execute();
+    }
+
     class FetchTask extends AsyncTask<MobileServiceClient, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(MobileServiceClient... params) {
 
-            progressDialog.show();
-
             MobileServiceTable<BD_Donate> mTable = params[0].getTable("BD_Donate", BD_Donate.class);
             try {
-                mList = mTable.execute().get();
+                mList = mTable.where().field("bloodGroup").eq(seeker.getBloodGroup()).and().field("isPrivate").eq(false).execute().get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 return false;
             } catch (ExecutionException e) {
-                e.printStackTrace();
-                return false;
-            } catch (MobileServiceException e) {
                 e.printStackTrace();
                 return false;
             }
@@ -195,7 +195,9 @@ public class SeekFragment extends Fragment {
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
                 donorResult.clear();
-                donorResult.addAll(mList);
+
+                List<BD_Donate> newList = new ArrayList<>();
+                newList.addAll(mList);
 
                 Location locationA = new Location("point A");
                 Location locationB = new Location("point B");
@@ -210,27 +212,46 @@ public class SeekFragment extends Fragment {
 
                     float distance = locationA.distanceTo(locationB);
                     if(distance > 10000)
-                        donorResult.remove(bd);
+                        newList.remove(bd);
                 }
 
                 if(donorResult.isEmpty())
                 {
                     emptyListCondition.setVisibility(View.VISIBLE);
-                    fullListCondition.setVisibility(View.GONE);
                     usersRecyclerView.setVisibility(View.GONE);
                 }
                 else
                 {
-                    emptyListCondition.setVisibility(View.GONE);
-                    fullListCondition.setVisibility(View.VISIBLE);
+                    for (int i=0; i<newList.size(); i++){
+
+                        locationB.setLatitude(Double.parseDouble(newList.get(i).getLatitude()));
+                        locationB.setLongitude(Double.parseDouble(newList.get(i).getLongitude()));
+
+                        float distance = locationA.distanceTo(locationB);
+
+                        newList.get(i).setDistance(distance);
+                    }
+
+                    Collections.sort(newList, new CustomComparator());
+                    donorResult.addAll(newList);
+
+                    seekAdapter.notifyDataSetChanged();
+                    emptyListCondition.setVisibility(View.GONE);;
                     usersRecyclerView.setVisibility(View.VISIBLE);
                 }
 
-                seekAdapter.notifyDataSetChanged();
             }
 
             progressDialog.dismiss();
 
+        }
+    }
+
+    public class CustomComparator implements Comparator<BD_Donate> {
+
+        @Override
+        public int compare(BD_Donate o1, BD_Donate o2) {
+            return o1.getDistance()>o2.getDistance() ? (int)(o1.getDistance()-o2.getDistance()) : (int)(o2.getDistance()-o1.getDistance());
         }
     }
 }

@@ -29,6 +29,7 @@ import com.microsoft.windowsazure.mobileservices.MobileServiceException;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
+import com.microsoft.windowsazure.mobileservices.table.query.QueryOrder;
 import com.purlieus.purlieus.R;
 import com.purlieus.purlieus.adapters.DonorAdapter;
 import com.purlieus.purlieus.adapters.SeekAdapter;
@@ -58,7 +59,6 @@ public class DonateFragment extends Fragment {
     public static final String PROFILE_DATA="profile";
     private MobileServiceClient mClient;
     DonorAdapter donorAdapter;
-    Context context;
     List<BD_Seek> donorResult = new ArrayList<BD_Seek>();
     List<BD_Seek> mList;
     RecyclerView usersRecyclerView;
@@ -79,8 +79,6 @@ public class DonateFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        progressDialog = new ProgressDialog(context);
-
         sp = getActivity().getSharedPreferences(PROFILE_DATA, Context.MODE_PRIVATE);
         donor = new BD_Donate();
         donor.setName(sp.getString("name",""));
@@ -97,11 +95,13 @@ public class DonateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_donate, container, false);
 
-        emptyListCondition = (LinearLayout) view.findViewById(R.id.no_donors_layout);
+        emptyListCondition = (LinearLayout) view.findViewById(R.id.no_seekers_layout);
         fullListCondition = (LinearLayout) view.findViewById(R.id.donate_tab);
 
         spinner = (Spinner)view.findViewById(R.id.bg_donate_spinner);
         switchCompat = (SwitchCompat) view.findViewById(R.id.donor_private_switch);
+
+        progressDialog = new ProgressDialog(getActivity());
 
         String[] groups = {"O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, groups);
@@ -161,8 +161,6 @@ public class DonateFragment extends Fragment {
         usersRecyclerView.setAdapter(donorAdapter);
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //Donate Button OnClickListener
-        final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.donate_tab);
 
         Button donButton = (Button) view.findViewById(R.id.donateButton);
         donButton.setOnClickListener(new View.OnClickListener() {
@@ -170,10 +168,10 @@ public class DonateFragment extends Fragment {
             public void onClick(View view) {
 
                 usersRecyclerView.setVisibility(View.VISIBLE);
-                linearLayout.setVisibility(View.GONE);
+                fullListCondition.setVisibility(View.GONE);
 
                 mClient.getTable(BD_Donate.class).insert(donor);
-
+                progressDialog.show();
                 new FetchTask().execute(mClient);
 
             }
@@ -184,17 +182,19 @@ public class DonateFragment extends Fragment {
         return view;
     }
 
+    public void loadSeekers(){
+        new FetchTask().execute();
+    }
+
     class FetchTask extends AsyncTask<MobileServiceClient, Void, Boolean>{
 
         @Override
         protected Boolean doInBackground(MobileServiceClient... params) {
 
-            progressDialog.show();
-
             MobileServiceTable<BD_Seek> mTable = params[0].getTable("BD_Seek", BD_Seek.class);
             mList = new ArrayList<>();
             try {
-                mList = mTable.where().field("bloodGroup").eq(donor.getBloodGroup()).execute().get();
+                mList = mTable.where().field("bloodGroup").eq(donor.getBloodGroup()).orderBy("isUrgent", QueryOrder.Descending).execute().get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -213,9 +213,11 @@ public class DonateFragment extends Fragment {
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
                 donorResult.clear();
-                donorResult.addAll(mList);
 
-                distanceHashMap = new HashMap<>();
+                List<BD_Seek> newList = new ArrayList<>();
+                donorResult.addAll(mList);
+                newList.addAll(mList);
+
 
                 Location locationA = new Location("point A");
                 Location locationB = new Location("point B");
@@ -223,60 +225,43 @@ public class DonateFragment extends Fragment {
                 locationA.setLatitude(Double.parseDouble(donor.getLatitude()));
                 locationA.setLongitude(Double.parseDouble(donor.getLongitude()));
 
-                for (BD_Seek seeker : mList) {
+                for (BD_Seek seeker : donorResult) {
 
                     locationB.setLatitude(Double.parseDouble(seeker.getLatitude()));
                     locationB.setLongitude(Double.parseDouble(seeker.getLongitude()));
 
                     float distance = locationA.distanceTo(locationB);
+
                     if(distance > 10000)
-                        donorResult.remove(seeker);
+                        newList.remove(seeker);
                 }
 
-                if(donorResult.isEmpty())
+                /*if(newList.isEmpty())
                 {
+                    Log.d("is", "Empty!");
                     emptyListCondition.setVisibility(View.VISIBLE);
-                    fullListCondition.setVisibility(View.GONE);
                     usersRecyclerView.setVisibility(View.GONE);
                 }
                 else
                 {
-                    emptyListCondition.setVisibility(View.GONE);
-                    fullListCondition.setVisibility(View.VISIBLE);
-                    usersRecyclerView.setVisibility(View.VISIBLE);
+                    for (int i=0; i<newList.size(); i++){
 
-                    for (BD_Seek seeker : donorResult){
-
-                        locationB.setLatitude(Double.parseDouble(seeker.getLatitude()));
-                        locationB.setLongitude(Double.parseDouble(seeker.getLongitude()));
+                        locationB.setLatitude(Double.parseDouble(newList.get(i).getLatitude()));
+                        locationB.setLongitude(Double.parseDouble(newList.get(i).getLongitude()));
 
                         float distance = locationA.distanceTo(locationB);
 
-                        distanceHashMap.put(seeker.getContactNumber().toString(), distance);
+                        newList.get(i).setDistance(distance);
                     }
 
-                    HashMap<String, Float> sortedMapAsc = sortByComparator(distanceHashMap, true);
-                    List<BD_Seek> sortedSeekers = new LinkedList<>();
+                    Collections.sort(newList, new CustomComparator());
+                    donorResult.clear();*/
 
-                    Iterator it = sortedMapAsc.entrySet().iterator();
-                    while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry)it.next();
-                        System.out.println(pair.getKey() + " = " + pair.getValue());
-                        it.remove(); // avoids a ConcurrentModificationException
-
-                        for (BD_Seek item : donorResult)
-                        {
-                            if(item.getContactNumber() == pair.getKey())
-                                sortedSeekers.add(item);
-                        }
-                    }
-
-                    donorResult.clear();
-                    donorResult.addAll(sortedSeekers);
-                }
-
+                donorResult.addAll(newList);
 
                 donorAdapter.notifyDataSetChanged();
+                emptyListCondition.setVisibility(View.GONE);
+                usersRecyclerView.setVisibility(View.VISIBLE);
 
             }
 
@@ -285,36 +270,11 @@ public class DonateFragment extends Fragment {
 
     }
 
-    private static HashMap<String, Float> sortByComparator(HashMap<String, Float> unsortMap, final boolean order)
-    {
+    public class CustomComparator implements Comparator<BD_Seek>{
 
-        List<HashMap.Entry<String, Float>> list = new LinkedList<>(unsortMap.entrySet());
-
-        // Sorting the list based on values
-        Collections.sort(list, new Comparator<HashMap.Entry<String, Float>>()
-        {
-            public int compare(HashMap.Entry<String, Float> o1,
-                               HashMap.Entry<String, Float> o2)
-            {
-                if (order)
-                {
-                    return o1.getValue().compareTo(o2.getValue());
-                }
-                else
-                {
-                    return o2.getValue().compareTo(o1.getValue());
-
-                }
-            }
-        });
-
-        // Maintaining insertion order with the help of LinkedList
-        HashMap<String, Float> sortedMap = new LinkedHashMap<>();
-        for (HashMap.Entry<String, Float> entry : list)
-        {
-            sortedMap.put(entry.getKey(), entry.getValue());
+        @Override
+        public int compare(BD_Seek o1, BD_Seek o2) {
+            return o1.getDistance()>o2.getDistance() ? (int)(o1.getDistance()-o2.getDistance()) : (int)(o2.getDistance()-o1.getDistance());
         }
-
-        return sortedMap;
     }
 }
