@@ -5,7 +5,6 @@ package com.purlieus.purlieus.models;
  */
 
 public class BD_Seek {
-    private String id;
     private String name, sex, contactNumber, email, bloodGroup, latitude, longitude;
     private int age;
     private boolean isUrgent;

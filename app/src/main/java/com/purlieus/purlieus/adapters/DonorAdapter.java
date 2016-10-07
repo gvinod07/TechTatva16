@@ -20,12 +20,12 @@ import java.util.List;
 
 public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.UserViewHolder> {
 
-private List<BD_Donate> list;
+private List<BD_Seek> list;
 private LayoutInflater inflater;
 private Context context;
 
 
-public DonorAdapter(Context context, List<BD_Donate> list) {
+public DonorAdapter(Context context, List<BD_Seek> list) {
         inflater = LayoutInflater.from(context);
         this.list = list;
         this.context = context;
@@ -44,7 +44,7 @@ public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 @Override
 public void onBindViewHolder(UserViewHolder holder, int position) {
 
-        BD_Donate model = list.get(position);
+        BD_Seek model = list.get(position);
         holder.name.setText(model.getName());
         holder.bloodGroup.setText(model.getBloodGroup());
         holder.age.setText(Integer.toString(model.getAge()));

@@ -2,12 +2,14 @@ package com.purlieus.purlieus.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +17,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceException;
@@ -31,6 +35,7 @@ import com.purlieus.purlieus.models.BD_Seek;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -44,12 +49,28 @@ public class DonateFragment extends Fragment {
     private MobileServiceClient mClient;
     DonorAdapter donorAdapter;
     Context context;
-    List<BD_Donate> donorResult = new ArrayList<BD_Donate>();
-    BD_Donate item;
-    List<BD_Donate> mList;
+    List<BD_Seek> donorResult = new ArrayList<BD_Seek>();
+    List<BD_Seek> mList;
     RecyclerView usersRecyclerView;
+    SharedPreferences sp;
+    SwitchCompat switchCompat;
+    private BD_Donate donor;
 
     public DonateFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sp = getActivity().getSharedPreferences(PROFILE_DATA, Context.MODE_PRIVATE);
+        donor = new BD_Donate();
+        donor.setName(sp.getString("name",""));
+        donor.setSex(sp.getString("sex",""));
+        donor.setAge(sp.getInt("age",0));
+        donor.setEmail(sp.getString("email",""));
+        donor.setContactNumber(sp.getString("contact",""));
+        donor.setLatitude(sp.getString("latitude",""));
+        donor.setLongitude(sp.getString("longitude",""));
     }
 
     @Nullable
@@ -58,11 +79,11 @@ public class DonateFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_donate, container, false);
 
         spinner = (Spinner)view.findViewById(R.id.bg_donate_spinner);
+        switchCompat = (SwitchCompat) view.findViewById(R.id.donor_private_switch);
+
         String[] groups = {"O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, groups);
         spinner.setAdapter(adapter);
-
-        item = new BD_Donate();
 
         try{
             mClient = new MobileServiceClient("https://purlieus.azurewebsites.net", getActivity());
@@ -70,16 +91,32 @@ public class DonateFragment extends Fragment {
         catch(MalformedURLException e){
             e.printStackTrace();
         }
-
-
-        SharedPreferences sp = getActivity().getSharedPreferences(PROFILE_DATA, Context.MODE_PRIVATE);
+        
         final SharedPreferences.Editor editor = sp.edit();
+
+
+        String seekerBG;
+        if (sp.getString("bg_donate","").equals("")){
+            seekerBG = sp.getString("bg", "");
+        }
+        else{
+            seekerBG = sp.getString("bg_donate", "");
+        }
+
+        int selectBG=0;
+        for (int i=0; i<groups.length; i++){
+            if (seekerBG.equals(groups[i])){
+                selectBG=i;
+            }
+        }
+        spinner.setSelection(selectBG);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 editor.putString("bg_donate", parent.getItemAtPosition(position).toString());
                 editor.apply();
+                donor.setBloodGroup(parent.getItemAtPosition(position).toString());
                 Log.d("Selected", parent.getItemAtPosition(position).toString());
             }
 
@@ -89,18 +126,13 @@ public class DonateFragment extends Fragment {
             }
         });
 
-        /*BD_Donate item = new BD_Donate();
-        item.setName(sp.getString("name",""));
-        item.setSex(sp.getString("sex",""));
-        item.setAge(sp.getInt("age",0));
-        item.setBloodGroup(sp.getString("bg",""));
-        item.setEmail(sp.getString("email",""));
-        item.setContactNumber(sp.getString("contact",""));
-        item.setLatitude(sp.getString("latitude",""));
-        item.setLongitude(sp.getString("longitude",""));
-        item.setPrivate(true);
-
-        mClient.getTable(BD_Donate.class).insert(item);*/
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) donor.setPrivate(true);
+                else donor.setPrivate(false);
+            }
+        });
 
         usersRecyclerView = (RecyclerView)view.findViewById(R.id.donate_recycler_view);
         donorAdapter = new DonorAdapter(getActivity(), donorResult);
@@ -114,12 +146,17 @@ public class DonateFragment extends Fragment {
         donButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Log.d("TAG", "Entered On Click");
+
                 usersRecyclerView.setVisibility(View.VISIBLE);
                 linearLayout.setVisibility(View.GONE);
+
+                mClient.getTable(BD_Donate.class).insert(donor);
+
+                new FetchTask().execute(mClient);
+
             }
         });
-        new FetchTask().execute(mClient);
+
 
 
         return view;
@@ -129,15 +166,13 @@ public class DonateFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(MobileServiceClient... params) {
-            MobileServiceTable<BD_Donate> mTable = params[0].getTable("BD_Donate", BD_Donate.class);
+            MobileServiceTable<BD_Seek> mTable = params[0].getTable("BD_Seek", BD_Seek.class);
             mList = new ArrayList<>();
             try {
-                mList = mTable.execute().get();
+                mList = mTable.where().field("bloodGroup").eq(donor.getBloodGroup()).execute().get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (MobileServiceException e) {
                 e.printStackTrace();
             }
 
@@ -153,7 +188,25 @@ public class DonateFragment extends Fragment {
             if (aBoolean) {
                 donorResult.clear();
                 donorResult.addAll(mList);
+
+                Location locationA = new Location("point A");
+                Location locationB = new Location("point B");
+
+                locationA.setLatitude(Double.parseDouble(donor.getLatitude()));
+                locationA.setLongitude(Double.parseDouble(donor.getLongitude()));
+
+                for (BD_Seek seeker : donorResult) {
+
+                    locationB.setLatitude(Double.parseDouble(seeker.getLatitude()));
+                    locationB.setLongitude(Double.parseDouble(seeker.getLongitude()));
+
+                    float distance = locationA.distanceTo(locationB);
+                    if(distance > 10000)
+                        donorResult.remove(seeker);
+                }
+
                 donorAdapter.notifyDataSetChanged();
+
             }
         }
 

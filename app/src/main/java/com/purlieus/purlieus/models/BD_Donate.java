@@ -5,7 +5,6 @@ package com.purlieus.purlieus.models;
  */
 
 public class BD_Donate {
-    private String id;
     private String name;
     private String sex;
     private String contactNumber;
