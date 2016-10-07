@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -10,19 +10,24 @@
     android:paddingTop="@dimen/padding_default">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/item_seeker_image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="0"
+        android:alpha="0.54"
+        android:layout_marginLeft="@dimen/padding_default"
+        android:layout_marginStart="@dimen/padding_default"
+        android:src="@drawable/ic_profile"
+        />
 
-        <ImageView
-            android:id="@+id/item_seeker_image_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="@dimen/padding_default"
-            android:layout_marginStart="@dimen/padding_default"
-            android:src="@drawable/ic_profile"
-            android:layout_centerVertical="true"
-            />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/padding_2x"
+        android:layout_marginStart="@dimen/padding_2x">
 
         <TextView
             android:id="@+id/name_item"
@@ -31,135 +36,165 @@
             tools:text="@string/app_name"
             android:fontFamily="sans-serif-medium"
             android:textColor="@color/black"
-            android:textSize="@dimen/typography_title"
-            android:layout_toRightOf="@id/item_seeker_image_view"
-            android:layout_toEndOf="@id/item_seeker_image_view"
-            android:layout_marginLeft="@dimen/padding_2x"
-            android:layout_marginStart="@dimen/padding_2x"
-            android:layout_centerVertical="true"
-            />
+            android:textSize="@dimen/typography_title"/>
 
-        <TextView
-            android:id="@+id/blood_group_type_item"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/app_name"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            android:textSize="@dimen/typography_subheading"
-            android:paddingLeft="10dp"
-            android:paddingRight="@dimen/padding_default"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_toLeftOf="@id/blood_group_type_item"
-            android:layout_toStartOf="@id/blood_group_type_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/blood_group"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            android:textSize="@dimen/typography_subheading"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+            <LinearLayout
+                android:padding="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/padding_half"
+                android:background="@color/teal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/blood_group"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="bold"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"/>
+
+                <TextView
+                    android:id="@+id/blood_group_type_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/app_name"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/typography_subheading"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/urgent_label"
+                android:padding="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="@dimen/padding_half"
+                android:background="@color/red_material">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/typography_subheading"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/dividerColor"
+            android:layout_marginTop="@dimen/padding_half"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="0.75">
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/contact"
-                    android:fontFamily="sans-serif-medium"
-                    android:textSize="@dimen/typography_subheading"
-                    android:textColor="@color/black"
-                    android:paddingLeft="@dimen/padding_default"
-                    android:paddingTop="@dimen/padding_default"/>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/padding_half">
 
-                <TextView
-                    android:id="@+id/contact_num_item"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="@dimen/typography_body"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/contact_num_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/app_name"
+                        android:fontFamily="sans-serif"
+                        android:textSize="@dimen/typography_body"
+                        android:paddingRight="@dimen/padding_default"
+                        android:paddingLeft="10dp"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="@string/app_name"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/typography_subheading"
-                    android:paddingRight="@dimen/padding_default"
-                    android:paddingLeft="10dp"
-                    />
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sex"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="@dimen/typography_body"
+                        />
+                    <TextView
+                        android:id="@+id/sex_type_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/app_name"
+                        android:fontFamily="sans-serif"
+                        android:textSize="@dimen/typography_body"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="@dimen/padding_default"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/age"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="@dimen/typography_body" />
+
+                    <TextView
+                        android:id="@+id/age_value_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/app_name"
+                        android:fontFamily="sans-serif"
+                        android:textSize="@dimen/typography_body"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"/>
+                </LinearLayout>/>
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sex"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/typography_subheading"
-                    android:paddingLeft="@dimen/padding_default"
-                    android:paddingTop="@dimen/padding_default"
-                    android:paddingBottom="@dimen/padding_default" />
-                <TextView
-                    android:id="@+id/sex_type_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/app_name"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/typography_body"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="@dimen/padding_default"
-                    android:paddingTop="@dimen/padding_default"
-                    android:paddingBottom="@dimen/padding_default"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/age"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/typography_subheading" />
-
-                <TextView
-                    android:id="@+id/age_value_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/app_name"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/typography_body"
-                    android:layout_weight="0.02"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
-            </LinearLayout>/>
         </LinearLayout>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_caller"
-            android:id="@+id/item_urgent_call_button"
-            android:layout_weight="0"
-            android:layout_gravity="center_vertical"
-            android:padding="@dimen/padding_default"/>
+
+
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/phone"
+        android:padding="3dp"
+        android:id="@+id/item_urgent_call_button"
+        android:layout_weight="0"
+        android:layout_marginRight="@dimen/padding_default"
+        android:layout_marginEnd="@dimen/padding_default"/>
+
 </LinearLayout>
+
