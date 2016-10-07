@@ -1,6 +1,7 @@
 package com.purlieus.purlieus.adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.purlieus.purlieus.R;
+import com.purlieus.purlieus.models.BD_Donate;
 import com.purlieus.purlieus.models.BD_Seek;
 
 import java.util.List;
@@ -18,18 +20,18 @@ import java.util.List;
 
 public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.UserViewHolder> {
 
-private List<BD_Seek> list;
+private List<BD_Donate> list;
 private LayoutInflater inflater;
 private Context context;
 
 
-public DonorAdapter(Context context, List<BD_Seek> list) {
+public DonorAdapter(Context context, List<BD_Donate> list) {
         inflater = LayoutInflater.from(context);
         this.list = list;
         this.context = context;
         }
 
-@Override
+    @Override
 public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = inflater.inflate(R.layout.item_donation, parent, false);
@@ -42,10 +44,10 @@ public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 @Override
 public void onBindViewHolder(UserViewHolder holder, int position) {
 
-        BD_Seek model = list.get(position);
+        BD_Donate model = list.get(position);
         holder.name.setText(model.getName());
         holder.bloodGroup.setText(model.getBloodGroup());
-        holder.age.setText(model.getAge());
+        holder.age.setText(Integer.toString(model.getAge()));
         holder.phoneNum.setText(model.getContactNumber());
         holder.sex.setText(model.getSex());
 

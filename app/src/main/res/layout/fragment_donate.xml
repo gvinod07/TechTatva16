@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/donate_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -130,6 +131,7 @@
             android:padding="@dimen/padding_default">
 
             <android.support.v7.widget.AppCompatButton
+                android:id="@+id/donateButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/donate"

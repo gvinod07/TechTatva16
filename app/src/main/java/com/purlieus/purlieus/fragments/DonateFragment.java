@@ -6,12 +6,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
@@ -20,7 +24,10 @@ import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 import com.purlieus.purlieus.R;
+import com.purlieus.purlieus.adapters.DonorAdapter;
+import com.purlieus.purlieus.adapters.SeekAdapter;
 import com.purlieus.purlieus.models.BD_Donate;
+import com.purlieus.purlieus.models.BD_Seek;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -35,6 +42,12 @@ public class DonateFragment extends Fragment {
     private Spinner spinner;
     public static final String PROFILE_DATA="profile";
     private MobileServiceClient mClient;
+    DonorAdapter donorAdapter;
+    Context context;
+    List<BD_Donate> donorResult = new ArrayList<BD_Donate>();
+    BD_Donate item;
+    List<BD_Donate> mList;
+    RecyclerView usersRecyclerView;
 
     public DonateFragment() {
     }
@@ -48,6 +61,8 @@ public class DonateFragment extends Fragment {
         String[] groups = {"O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, groups);
         spinner.setAdapter(adapter);
+
+        item = new BD_Donate();
 
         try{
             mClient = new MobileServiceClient("https://purlieus.azurewebsites.net", getActivity());
@@ -86,6 +101,24 @@ public class DonateFragment extends Fragment {
         item.setPrivate(true);
 
         mClient.getTable(BD_Donate.class).insert(item);*/
+
+        usersRecyclerView = (RecyclerView)view.findViewById(R.id.donate_recycler_view);
+        donorAdapter = new DonorAdapter(getActivity(), donorResult);
+        usersRecyclerView.setAdapter(donorAdapter);
+        usersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //Donate Button OnClickListener
+        final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.donate_tab);
+
+        Button donButton = (Button) view.findViewById(R.id.donateButton);
+        donButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Log.d("TAG", "Entered On Click");
+                usersRecyclerView.setVisibility(View.VISIBLE);
+                linearLayout.setVisibility(View.GONE);
+            }
+        });
         new FetchTask().execute(mClient);
 
 
@@ -97,7 +130,7 @@ public class DonateFragment extends Fragment {
         @Override
         protected Boolean doInBackground(MobileServiceClient... params) {
             MobileServiceTable<BD_Donate> mTable = params[0].getTable("BD_Donate", BD_Donate.class);
-            List<BD_Donate> mList = new ArrayList<>();
+            mList = new ArrayList<>();
             try {
                 mList = mTable.execute().get();
             } catch (InterruptedException e) {
@@ -114,6 +147,14 @@ public class DonateFragment extends Fragment {
                 Log.d("Name: ", mList.get(0).getName());
 
             return true;
+        }
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean) {
+                donorResult.clear();
+                donorResult.addAll(mList);
+                donorAdapter.notifyDataSetChanged();
+            }
         }
 
     }

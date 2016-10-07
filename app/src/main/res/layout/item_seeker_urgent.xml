@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/blood_group"
+                android:text="@string/blood_group"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/black"
                 android:textSize="@dimen/typography_subheading"
@@ -115,7 +115,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="@string/sex"
+                        android:text="@string/sex"
                         android:fontFamily="sans-serif"
                         android:textColor="@color/black"
                         android:textSize="@dimen/typography_subheading"
@@ -139,7 +139,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="@string/age"
+                        android:text="@string/age"
                         android:fontFamily="sans-serif"
                         android:textColor="@color/black"
                         android:textSize="@dimen/typography_subheading" />
