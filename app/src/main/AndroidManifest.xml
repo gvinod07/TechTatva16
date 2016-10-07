@@ -39,6 +39,11 @@
             android:theme="@style/HealthTheme">
         </activity>
 
+        <activity android:name=".activities.AboutActivity"
+            android:label="@string/about"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AboutTheme"/>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

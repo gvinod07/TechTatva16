@@ -1,11 +1,16 @@
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.purlieus.purlieus.fragments.DetailsFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
 <RelativeLayout
     android:id="@+id/fragment_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="@dimen/padding_default"
-    tools:context="com.purlieus.purlieus.fragments.DetailsFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:paddingTop="@dimen/padding_default">
 
     <LinearLayout
         android:id="@+id/edit_details_layout"
@@ -275,4 +280,4 @@
         </LinearLayout>
 
 </RelativeLayout>
-
+</ScrollView>
