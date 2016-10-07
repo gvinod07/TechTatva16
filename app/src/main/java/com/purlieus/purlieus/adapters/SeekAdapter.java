@@ -73,13 +73,13 @@ public class SeekAdapter extends RecyclerView.Adapter<SeekAdapter.UserViewHolder
         public UserViewHolder(View itemView) {
             super(itemView);
 
-            name = (TextView) itemView.findViewById(R.id.name_item);
-            bloodGroup = (TextView) itemView.findViewById(R.id.blood_group_type_item);
-            phoneNum = (TextView) itemView.findViewById(R.id.contact_num_item);
-            sex = (TextView) itemView.findViewById(R.id.sex_type_item);
-            age = (TextView) itemView.findViewById(R.id.age_value_item);
+            name = (TextView) itemView.findViewById(R.id.donor_name_item);
+            bloodGroup = (TextView) itemView.findViewById(R.id.donor_blood_group_item);
+            phoneNum = (TextView) itemView.findViewById(R.id.donor_contact_item);
+            sex = (TextView) itemView.findViewById(R.id.donor_sex_item);
+            age = (TextView) itemView.findViewById(R.id.donor_age_item);
 
-            callButton = (ImageView) itemView.findViewById(R.id.seeker_call_button);
+            callButton = (ImageView) itemView.findViewById(R.id.donor_call_button);
             callButton.setOnClickListener(this);
 
         }

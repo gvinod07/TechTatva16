@@ -30,7 +30,7 @@
         android:layout_marginStart="@dimen/padding_2x">
 
         <TextView
-            android:id="@+id/name_item"
+            android:id="@+id/donor_name_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/app_name"
@@ -62,7 +62,7 @@
                     android:layout_marginEnd="5dp"/>
 
                 <TextView
-                    android:id="@+id/blood_group_type_item"
+                    android:id="@+id/donor_blood_group_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="@string/app_name"
@@ -105,7 +105,7 @@
                         />
 
                     <TextView
-                        android:id="@+id/contact_num_item"
+                        android:id="@+id/donor_contact_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="@string/app_name"
@@ -130,7 +130,7 @@
                         android:textSize="@dimen/typography_body"
                         />
                     <TextView
-                        android:id="@+id/sex_type_item"
+                        android:id="@+id/donor_sex_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="@string/app_name"
@@ -148,7 +148,7 @@
                         android:textSize="@dimen/typography_body" />
 
                     <TextView
-                        android:id="@+id/age_value_item"
+                        android:id="@+id/donor_age_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="@string/app_name"

@@ -15,6 +15,15 @@ public class BD_Seek {
     private String longitude;
     private int age;
     private boolean isUrgent;
+    private float distance;
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
 
     public String getName() {
         return name;
