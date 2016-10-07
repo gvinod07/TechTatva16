@@ -2,12 +2,14 @@ package com.purlieus.purlieus.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -46,14 +49,31 @@ public class SeekFragment extends Fragment {
     private MobileServiceClient mClient;
     Context context;
     SeekAdapter seekAdapter;
-    List<BD_Seek> seekResult = new ArrayList<BD_Seek>();
-    BD_Seek item;
-    List<BD_Seek> mList;
+    List<BD_Donate> donorResult = new ArrayList<>();
+    List<BD_Donate> mList;
     RecyclerView usersRecyclerView;
+    
+    private SharedPreferences sp;
+    private BD_Seek seeker;
 
     public SeekFragment() {
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sp = getActivity().getSharedPreferences(PROFILE_DATA, Context.MODE_PRIVATE);
+        
+        seeker = new BD_Seek();
+        seeker.setName(sp.getString("name",""));
+        seeker.setSex(sp.getString("sex",""));
+        seeker.setAge(sp.getInt("age",0));
+        seeker.setEmail(sp.getString("email",""));
+        seeker.setContactNumber(sp.getString("contact",""));
+        seeker.setLatitude(sp.getString("latitude",""));
+        seeker.setLongitude(sp.getString("longitude",""));
+    }
+    
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,8 +83,9 @@ public class SeekFragment extends Fragment {
         String[] groups = {"O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, groups);
         spinner.setAdapter(adapter);
-
-        item = new BD_Seek();
+        
+        final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.seek_tab);
+        SwitchCompat sc = (SwitchCompat)view.findViewById(R.id.urgent_seek_switch);
 
         try{
             mClient = new MobileServiceClient("https://purlieus.azurewebsites.net", getActivity());
@@ -73,36 +94,29 @@ public class SeekFragment extends Fragment {
             e.printStackTrace();
         }
 
+        String seekerBG;
+        if (sp.getString("bg_seek","").equals("")){
+            seekerBG = sp.getString("bg", "");
+        }
+        else{
+            seekerBG = sp.getString("bg_seek", "");
+        }
+
+        int selectBG=0;
+        for (int i=0; i<groups.length; i++){
+            if (seekerBG.equals(groups[i])){
+                selectBG=i;
+            }
+        }
+        spinner.setSelection(selectBG);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences(PROFILE_DATA, Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = sp.edit();
                 editor.putString("bg_seek", parent.getItemAtPosition(position).toString());
                 editor.apply();
-                Log.d("Selected", parent.getItemAtPosition(position).toString());
-
-                /*item.setName("Bhatnagar");
-                item.setSex("M");
-                item.setAge(12);
-                item.setBloodGroup("O+");
-                item.setEmail("abc@pqr.com");
-                item.setContactNumber("9876543210");
-                item.setLatitude("23N");
-                item.setLongitude("35N");
-                item.setUrgent(false);
-                mClient.getTable(BD_Seek.class).insert(item, new TableOperationCallback<BD_Seek>() {
-                @Override
-                public void onCompleted(BD_Seek entity, Exception exception, ServiceFilterResponse response) {
-                    if (exception == null) {
-                    // Insert succeeded
-                        Log.d("Seek", "successful");
-                    } else {
-                        exception.printStackTrace();
-                        Log.d("Seek", "exception");
-                    }
-                }
-                });*/
-
+                seeker.setBloodGroup(parent.getItemAtPosition(position).toString());
             }
 
             @Override
@@ -111,30 +125,30 @@ public class SeekFragment extends Fragment {
             }
         });
 
-        /*for(int i=1; i<=5; i++){
-            seekResult.add(item);
-        }*/
+        sc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) seeker.setUrgent(true);
+                else seeker.setUrgent(false);
+            }
+        });
 
         usersRecyclerView = (RecyclerView)view.findViewById(R.id.seek_recycler_view);
-        seekAdapter = new SeekAdapter(getActivity(), seekResult);
+        seekAdapter = new SeekAdapter(getActivity(), donorResult);
         usersRecyclerView.setAdapter(seekAdapter);
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        //Continue Button OnClickListener
-        final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.seek_tab);
 
         Button contButton = (Button) view.findViewById(R.id.continueButton);
         contButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Log.d("TAG", "Entered On Click");
                 usersRecyclerView.setVisibility(View.VISIBLE);
                 linearLayout.setVisibility(View.GONE);
-
+                mClient.getTable(BD_Seek.class).insert(seeker);
+                new SeekFragment.FetchTask().execute(mClient);
             }
         });
-        //Log.d("TAG", "Exited click");
-        new SeekFragment.FetchTask().execute(mClient);
+
         return view;
     }
 
@@ -142,7 +156,7 @@ public class SeekFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(MobileServiceClient... params) {
-            MobileServiceTable<BD_Seek> mTable = params[0].getTable("BD_Seek", BD_Seek.class);
+            MobileServiceTable<BD_Donate> mTable = params[0].getTable("BD_Donate", BD_Donate.class);
             try {
                 mList = mTable.execute().get();
             } catch (InterruptedException e) {
@@ -167,8 +181,25 @@ public class SeekFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
-                seekResult.clear();
-                seekResult.addAll(mList);
+                donorResult.clear();
+                donorResult.addAll(mList);
+
+                Location locationA = new Location("point A");
+                Location locationB = new Location("point B");
+
+                locationA.setLatitude(Double.parseDouble(seeker.getLatitude()));
+                locationA.setLongitude(Double.parseDouble(seeker.getLongitude()));
+
+                for (BD_Donate bd: mList) {
+
+                    locationB.setLatitude(Double.parseDouble(bd.getLatitude()));
+                    locationB.setLongitude(Double.parseDouble(bd.getLongitude()));
+
+                    float distance = locationA.distanceTo(locationB);
+                    if(distance > 10000)
+                        donorResult.remove(bd);
+                }
+
                 seekAdapter.notifyDataSetChanged();
             }
 

@@ -195,7 +195,7 @@ public class DonateFragment extends Fragment {
                 locationA.setLatitude(Double.parseDouble(donor.getLatitude()));
                 locationA.setLongitude(Double.parseDouble(donor.getLongitude()));
 
-                for (BD_Seek seeker : donorResult) {
+                for (BD_Seek seeker : mList) {
 
                     locationB.setLatitude(Double.parseDouble(seeker.getLatitude()));
                     locationB.setLongitude(Double.parseDouble(seeker.getLongitude()));
