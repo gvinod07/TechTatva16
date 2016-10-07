@@ -16,7 +16,11 @@ import com.purlieus.purlieus.fragments.SeekFragment;
 /**
  * Created by anurag on 3/10/16.
  */
-public class BloodDonationActivity extends AppCompatActivity {
+public class BloodDonationActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
+
+
+    SeekFragment seekFrag;
+    DonateFragment donFrag;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,11 +40,40 @@ public class BloodDonationActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout)findViewById(R.id.bd_tab_layout);
         ViewPager viewPager = (ViewPager)findViewById(R.id.bd_view_pager);
 
+        seekFrag = new SeekFragment();
+        donFrag= new DonateFragment();
+
         BDPagerAdapter pagerAdapter = new BDPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(new SeekFragment(), "Seek");
-        pagerAdapter.addFragment(new DonateFragment(), "Donate");
+        pagerAdapter.addFragment(seekFrag, "Seek");
+        pagerAdapter.addFragment(donFrag, "Donate");
         viewPager.setAdapter(pagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch(position){
+            case 0:{
+                seekFrag.loadDonors();
+                break;
+            }
+            case 1:{
+                donFrag.loadSeekers();
+                break;
+            }
+
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
