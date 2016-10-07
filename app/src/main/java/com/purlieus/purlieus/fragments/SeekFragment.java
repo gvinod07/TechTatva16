@@ -2,6 +2,7 @@ package com.purlieus.purlieus.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,16 +19,20 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.MobileServiceException;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 import com.purlieus.purlieus.R;
 //import com.purlieus.purlieus.models.BD_Donate;
 import com.purlieus.purlieus.adapters.SeekAdapter;
+import com.purlieus.purlieus.models.BD_Donate;
 import com.purlieus.purlieus.models.BD_Seek;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static com.google.android.gms.analytics.internal.zzy.co;
 
@@ -43,6 +48,8 @@ public class SeekFragment extends Fragment {
     SeekAdapter seekAdapter;
     List<BD_Seek> seekResult = new ArrayList<BD_Seek>();
     BD_Seek item;
+    List<BD_Seek> mList;
+    RecyclerView usersRecyclerView;
 
     public SeekFragment() {
     }
@@ -74,7 +81,7 @@ public class SeekFragment extends Fragment {
                 editor.apply();
                 Log.d("Selected", parent.getItemAtPosition(position).toString());
 
-                item.setName("Bhatnagar");
+                /*item.setName("Bhatnagar");
                 item.setSex("M");
                 item.setAge(12);
                 item.setBloodGroup("O+");
@@ -94,7 +101,7 @@ public class SeekFragment extends Fragment {
                         Log.d("Seek", "exception");
                     }
                 }
-                });
+                });*/
 
             }
 
@@ -104,11 +111,11 @@ public class SeekFragment extends Fragment {
             }
         });
 
-        for(int i=1; i<=5; i++){
+        /*for(int i=1; i<=5; i++){
             seekResult.add(item);
-        }
+        }*/
 
-        final RecyclerView usersRecyclerView = (RecyclerView)view.findViewById(R.id.seek_recycler_view);
+        usersRecyclerView = (RecyclerView)view.findViewById(R.id.seek_recycler_view);
         seekAdapter = new SeekAdapter(getActivity(), seekResult);
         usersRecyclerView.setAdapter(seekAdapter);
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -127,6 +134,44 @@ public class SeekFragment extends Fragment {
             }
         });
         //Log.d("TAG", "Exited click");
+        new SeekFragment.FetchTask().execute(mClient);
         return view;
+    }
+
+    class FetchTask extends AsyncTask<MobileServiceClient, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(MobileServiceClient... params) {
+            MobileServiceTable<BD_Seek> mTable = params[0].getTable("BD_Seek", BD_Seek.class);
+            try {
+                mList = mTable.execute().get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return false;
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+                return false;
+            } catch (MobileServiceException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            if (mList.isEmpty())
+                Log.d("List", "empty");
+            else
+                Log.d("Name: ", mList.get(0).getName());
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean) {
+                seekResult.clear();
+                seekResult.addAll(mList);
+                seekAdapter.notifyDataSetChanged();
+            }
+
+        }
     }
 }
