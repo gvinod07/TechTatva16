@@ -1,5 +1,6 @@
 package com.purlieus.purlieus.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -55,6 +56,10 @@ public class DonateFragment extends Fragment {
     SharedPreferences sp;
     SwitchCompat switchCompat;
     private BD_Donate donor;
+    ProgressDialog progressDialog;
+
+    LinearLayout emptyListCondition;
+    LinearLayout fullListCondition;
 
     public DonateFragment() {
     }
@@ -62,6 +67,9 @@ public class DonateFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        progressDialog = new ProgressDialog(context);
+
         sp = getActivity().getSharedPreferences(PROFILE_DATA, Context.MODE_PRIVATE);
         donor = new BD_Donate();
         donor.setName(sp.getString("name",""));
@@ -77,6 +85,9 @@ public class DonateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_donate, container, false);
+
+        emptyListCondition = (LinearLayout) view.findViewById(R.id.no_donors_layout);
+        fullListCondition = (LinearLayout) view.findViewById(R.id.donate_tab);
 
         spinner = (Spinner)view.findViewById(R.id.bg_donate_spinner);
         switchCompat = (SwitchCompat) view.findViewById(R.id.donor_private_switch);
@@ -166,6 +177,9 @@ public class DonateFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(MobileServiceClient... params) {
+
+            progressDialog.show();
+
             MobileServiceTable<BD_Seek> mTable = params[0].getTable("BD_Seek", BD_Seek.class);
             mList = new ArrayList<>();
             try {
@@ -176,8 +190,9 @@ public class DonateFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            if (mList.isEmpty())
+            if (mList.isEmpty()) {
                 Log.d("List", "empty");
+            }
             else
                 Log.d("Name: ", mList.get(0).getName());
 
@@ -205,9 +220,24 @@ public class DonateFragment extends Fragment {
                         donorResult.remove(seeker);
                 }
 
+                if(donorResult.isEmpty())
+                {
+                    emptyListCondition.setVisibility(View.VISIBLE);
+                    fullListCondition.setVisibility(View.GONE);
+                    usersRecyclerView.setVisibility(View.GONE);
+                }
+                else
+                {
+                    emptyListCondition.setVisibility(View.GONE);
+                    fullListCondition.setVisibility(View.VISIBLE);
+                    usersRecyclerView.setVisibility(View.VISIBLE);
+                }
+
                 donorAdapter.notifyDataSetChanged();
 
             }
+
+            progressDialog.dismiss();
         }
 
     }

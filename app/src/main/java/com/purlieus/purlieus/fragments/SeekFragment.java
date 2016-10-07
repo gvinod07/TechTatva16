@@ -1,5 +1,6 @@
 package com.purlieus.purlieus.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -52,6 +53,10 @@ public class SeekFragment extends Fragment {
     List<BD_Donate> donorResult = new ArrayList<>();
     List<BD_Donate> mList;
     RecyclerView usersRecyclerView;
+    ProgressDialog progressDialog;
+
+    LinearLayout emptyListCondition;
+    LinearLayout fullListCondition;
     
     private SharedPreferences sp;
     private BD_Seek seeker;
@@ -63,6 +68,8 @@ public class SeekFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = getActivity().getSharedPreferences(PROFILE_DATA, Context.MODE_PRIVATE);
+
+        progressDialog = new ProgressDialog(context);
         
         seeker = new BD_Seek();
         seeker.setName(sp.getString("name",""));
@@ -78,6 +85,9 @@ public class SeekFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_seek, container, false);
+
+        emptyListCondition = (LinearLayout) view.findViewById(R.id.no_donors_layout);
+        fullListCondition = (LinearLayout) view.findViewById(R.id.donate_tab);
 
         spinner = (Spinner)view.findViewById(R.id.bg_spinner);
         String[] groups = {"O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"};
@@ -156,6 +166,9 @@ public class SeekFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(MobileServiceClient... params) {
+
+            progressDialog.show();
+
             MobileServiceTable<BD_Donate> mTable = params[0].getTable("BD_Donate", BD_Donate.class);
             try {
                 mList = mTable.execute().get();
@@ -200,8 +213,23 @@ public class SeekFragment extends Fragment {
                         donorResult.remove(bd);
                 }
 
+                if(donorResult.isEmpty())
+                {
+                    emptyListCondition.setVisibility(View.VISIBLE);
+                    fullListCondition.setVisibility(View.GONE);
+                    usersRecyclerView.setVisibility(View.GONE);
+                }
+                else
+                {
+                    emptyListCondition.setVisibility(View.GONE);
+                    fullListCondition.setVisibility(View.VISIBLE);
+                    usersRecyclerView.setVisibility(View.VISIBLE);
+                }
+
                 seekAdapter.notifyDataSetChanged();
             }
+
+            progressDialog.dismiss();
 
         }
     }
