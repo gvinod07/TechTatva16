@@ -1,6 +1,7 @@
 package com.purlieus.purlieus.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -14,12 +15,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.microsoft.windowsazure.mobileservices.*;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 import com.purlieus.purlieus.R;
+import com.purlieus.purlieus.application.Purlieus;
 import com.purlieus.purlieus.models.TodoItem;
 
 import java.net.MalformedURLException;
@@ -37,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences sp = getSharedPreferences(Purlieus.PROFILE_DATA, MODE_PRIVATE);
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null) {
@@ -98,6 +103,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView profileName = (TextView)headerView.findViewById(R.id.username_text_view);
+        TextView profileLocation = (TextView)headerView.findViewById(R.id.user_location_text_view);
+
+        profileName.setText(sp.getString("Name", ""));
+        profileLocation.setText(sp.getString("Location", ""));
 
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close){
             @Override
