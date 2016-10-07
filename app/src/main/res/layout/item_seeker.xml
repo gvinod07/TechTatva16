@@ -27,9 +27,9 @@
                 />
 
             <TextView
+                android:id="@+id/name_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/name_item_seek_urgent"
                 tools:text="@string/app_name"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/black"
@@ -48,15 +48,15 @@
             android:layout_gravity="center_vertical"/>
 
         <TextView
+            android:id="@+id/blood_group_type_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/app_name"
-            android:id="@+id/BloodGroup_item_urgent_seek"
             android:fontFamily="sans-serif"
             android:textColor="@color/black"
             android:textSize="@dimen/typography_subheading"
             android:layout_weight="0.000002"
-            android:paddingLeft="10px"
+            android:paddingLeft="10dp"
             android:paddingRight="@dimen/padding_default"
             android:layout_gravity="center_vertical"/>
 
@@ -88,15 +88,15 @@
                     android:paddingTop="@dimen/padding_default"/>
 
                 <TextView
+                    android:id="@+id/contact_num_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/phone_item_seek_urgent"
                     tools:text="@string/app_name"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
                     android:textSize="@dimen/typography_subheading"
                     android:paddingRight="@dimen/padding_default"
-                    android:paddingLeft="10px"
+                    android:paddingLeft="10dp"
                     />
             </LinearLayout>
 
@@ -117,14 +117,14 @@
                     android:paddingTop="@dimen/padding_default"
                     android:paddingBottom="@dimen/padding_default" />
                 <TextView
+                    android:id="@+id/sex_type_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sex_item_seek_urgent"
                     tools:text="@string/app_name"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
                     android:textSize="@dimen/typography_body"
-                    android:paddingLeft="10px"
+                    android:paddingLeft="10dp"
                     android:paddingRight="@dimen/padding_default"
                     android:paddingTop="@dimen/padding_default"
                     android:paddingBottom="@dimen/padding_default"
@@ -139,16 +139,16 @@
                     android:textSize="@dimen/typography_subheading" />
 
                 <TextView
+                    android:id="@+id/age_value_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="@string/app_name"
-                    android:id="@+id/age_item_urgent_seek"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
                     android:textSize="@dimen/typography_body"
                     android:layout_weight="0.02"
-                    android:paddingLeft="10px"
-                    android:paddingRight="10px"/>
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"/>
             </LinearLayout>/>
         </LinearLayout>
         <ImageView
