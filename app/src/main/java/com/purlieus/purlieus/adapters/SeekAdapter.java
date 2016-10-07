@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.purlieus.purlieus.R;
+import com.purlieus.purlieus.models.BD_Donate;
 import com.purlieus.purlieus.models.BD_Seek;
 
 import java.util.List;
@@ -21,12 +22,12 @@ import static android.R.attr.id;
 
 public class SeekAdapter extends RecyclerView.Adapter<SeekAdapter.UserViewHolder> {
 
-    private List<BD_Seek> list;
+    private List<BD_Donate> list;
     private LayoutInflater inflater;
     private Context context;
 
 
-    public SeekAdapter(Context context, List<BD_Seek> list) {
+    public SeekAdapter(Context context, List<BD_Donate> list) {
         inflater = LayoutInflater.from(context);
         this.list = list;
         this.context = context;
@@ -50,12 +51,12 @@ public class SeekAdapter extends RecyclerView.Adapter<SeekAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
 
-        BD_Seek model = list.get(position);
-        holder.name.setText(model.getName());
-        holder.bloodGroup.setText(model.getBloodGroup());
-        holder.age.setText(Integer.toString(model.getAge()));
-        holder.phoneNum.setText(model.getContactNumber());
-        holder.sex.setText(model.getSex());
+        BD_Donate donor = list.get(position);
+        holder.name.setText(donor.getName());
+        holder.bloodGroup.setText(donor.getBloodGroup());
+        holder.age.setText(Integer.toString(donor.getAge()));
+        holder.phoneNum.setText(donor.getContactNumber());
+        holder.sex.setText(donor.getSex());
 
     }
 
