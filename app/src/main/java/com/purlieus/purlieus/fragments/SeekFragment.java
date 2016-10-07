@@ -198,6 +198,7 @@ public class SeekFragment extends Fragment {
 
                 List<BD_Donate> newList = new ArrayList<>();
                 newList.addAll(mList);
+                donorResult.addAll(mList);
 
                 Location locationA = new Location("point A");
                 Location locationB = new Location("point B");
@@ -215,14 +216,14 @@ public class SeekFragment extends Fragment {
                         newList.remove(bd);
                 }
 
-                if(donorResult.isEmpty())
+                if(newList.isEmpty())
                 {
                     emptyListCondition.setVisibility(View.VISIBLE);
                     usersRecyclerView.setVisibility(View.GONE);
                 }
                 else
                 {
-                    for (int i=0; i<newList.size(); i++){
+                    /*for (int i=0; i<newList.size(); i++){
 
                         locationB.setLatitude(Double.parseDouble(newList.get(i).getLatitude()));
                         locationB.setLongitude(Double.parseDouble(newList.get(i).getLongitude()));
@@ -232,7 +233,8 @@ public class SeekFragment extends Fragment {
                         newList.get(i).setDistance(distance);
                     }
 
-                    Collections.sort(newList, new CustomComparator());
+                    Collections.sort(newList, new CustomComparator());*/
+                    donorResult.clear();
                     donorResult.addAll(newList);
 
                     seekAdapter.notifyDataSetChanged();
