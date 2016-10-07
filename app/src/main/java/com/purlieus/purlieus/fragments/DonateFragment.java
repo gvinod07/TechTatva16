@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,8 +37,16 @@ import com.purlieus.purlieus.models.BD_Seek;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -57,6 +66,8 @@ public class DonateFragment extends Fragment {
     SwitchCompat switchCompat;
     private BD_Donate donor;
     ProgressDialog progressDialog;
+
+    HashMap<String, Float> distanceHashMap;
 
     LinearLayout emptyListCondition;
     LinearLayout fullListCondition;
@@ -204,6 +215,8 @@ public class DonateFragment extends Fragment {
                 donorResult.clear();
                 donorResult.addAll(mList);
 
+                distanceHashMap = new HashMap<>();
+
                 Location locationA = new Location("point A");
                 Location locationB = new Location("point B");
 
@@ -231,7 +244,37 @@ public class DonateFragment extends Fragment {
                     emptyListCondition.setVisibility(View.GONE);
                     fullListCondition.setVisibility(View.VISIBLE);
                     usersRecyclerView.setVisibility(View.VISIBLE);
+
+                    for (BD_Seek seeker : donorResult){
+
+                        locationB.setLatitude(Double.parseDouble(seeker.getLatitude()));
+                        locationB.setLongitude(Double.parseDouble(seeker.getLongitude()));
+
+                        float distance = locationA.distanceTo(locationB);
+
+                        distanceHashMap.put(seeker.getContactNumber().toString(), distance);
+                    }
+
+                    HashMap<String, Float> sortedMapAsc = sortByComparator(distanceHashMap, true);
+                    List<BD_Seek> sortedSeekers = new LinkedList<>();
+
+                    Iterator it = sortedMapAsc.entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry)it.next();
+                        System.out.println(pair.getKey() + " = " + pair.getValue());
+                        it.remove(); // avoids a ConcurrentModificationException
+
+                        for (BD_Seek item : donorResult)
+                        {
+                            if(item.getContactNumber() == pair.getKey())
+                                sortedSeekers.add(item);
+                        }
+                    }
+
+                    donorResult.clear();
+                    donorResult.addAll(sortedSeekers);
                 }
+
 
                 donorAdapter.notifyDataSetChanged();
 
@@ -240,5 +283,38 @@ public class DonateFragment extends Fragment {
             progressDialog.dismiss();
         }
 
+    }
+
+    private static HashMap<String, Float> sortByComparator(HashMap<String, Float> unsortMap, final boolean order)
+    {
+
+        List<HashMap.Entry<String, Float>> list = new LinkedList<>(unsortMap.entrySet());
+
+        // Sorting the list based on values
+        Collections.sort(list, new Comparator<HashMap.Entry<String, Float>>()
+        {
+            public int compare(HashMap.Entry<String, Float> o1,
+                               HashMap.Entry<String, Float> o2)
+            {
+                if (order)
+                {
+                    return o1.getValue().compareTo(o2.getValue());
+                }
+                else
+                {
+                    return o2.getValue().compareTo(o1.getValue());
+
+                }
+            }
+        });
+
+        // Maintaining insertion order with the help of LinkedList
+        HashMap<String, Float> sortedMap = new LinkedHashMap<>();
+        for (HashMap.Entry<String, Float> entry : list)
+        {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
     }
 }

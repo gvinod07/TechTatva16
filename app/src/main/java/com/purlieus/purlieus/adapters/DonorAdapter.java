@@ -38,7 +38,7 @@ public DonorAdapter(Context context, List<BD_Seek> list) {
     @Override
 public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.item_donation, parent, false);
+        View view = inflater.inflate(R.layout.item_seeker, parent, false);
 
         UserViewHolder holder = new UserViewHolder(view);
 
@@ -66,6 +66,7 @@ class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
     TextView name, bloodGroup, phoneNum, sex, age;
     ImageView callButton;
+
 
     public UserViewHolder(View itemView) {
         super(itemView);

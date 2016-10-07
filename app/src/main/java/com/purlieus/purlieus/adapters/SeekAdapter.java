@@ -41,10 +41,7 @@ public class SeekAdapter extends RecyclerView.Adapter<SeekAdapter.UserViewHolder
 
         View view;
 
-        /*if(viewType == 1)
-            view = inflater.inflate(R.layout.item_seeker_urgent, parent, false);
-        else*/
-            view = inflater.inflate(R.layout.item_seeker, parent, false);
+        view = inflater.inflate(R.layout.item_donation, parent, false);
 
         UserViewHolder holder = new UserViewHolder(view);
 
@@ -62,15 +59,6 @@ public class SeekAdapter extends RecyclerView.Adapter<SeekAdapter.UserViewHolder
         holder.sex.setText(donor.getSex());
 
     }
-
-    /*@Override
-    public int getItemViewType(int position) {
-        if (list.get(position).isUrgent()) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }*/
 
     @Override
     public int getItemCount() {
@@ -91,7 +79,7 @@ public class SeekAdapter extends RecyclerView.Adapter<SeekAdapter.UserViewHolder
             sex = (TextView) itemView.findViewById(R.id.sex_type_item);
             age = (TextView) itemView.findViewById(R.id.age_value_item);
 
-            callButton = (ImageView) itemView.findViewById(R.id.seek_call_button);
+            callButton = (ImageView) itemView.findViewById(R.id.seeker_call_button);
             callButton.setOnClickListener(this);
 
         }
