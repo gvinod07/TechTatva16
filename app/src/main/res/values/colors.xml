@@ -21,5 +21,6 @@
     <color name="slightlyDarkerBlue">#1976d2</color>
     <color name="green_dark">#388e3c</color>
     <color name="almost_white">#EEEEEE</color>
+    <color name="blue_grey">#607d8b</color>
 
 </resources>

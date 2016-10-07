@@ -20,6 +20,24 @@
         <item name="android:dropDownListViewStyle">@style/App.Style.Spinner</item>
     </style>
 
+    <style name="AboutTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/blue_grey</item>
+        <item name="colorAccent">@color/black</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorControlActivated">@color/blue_grey</item>
+        <item name="android:dropDownListViewStyle">@style/App.Style.Spinner</item>
+    </style>
+
+    <style name="AppBarTheme" parent = "ThemeOverlay.AppCompat.Dark">
+
+        <item name="android:textColorSecondary">@color/teal_dark</item>
+        <item name="android:textColorPrimary">@color/teal_dark</item>
+        <item name="selectableItemBackground">?attr/selectableItemBackground</item>
+
+    </style>
+
     <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">?attr/colorPrimary</item>
         <item name="colorControlActivated">?attr/colorPrimaryDark</item>

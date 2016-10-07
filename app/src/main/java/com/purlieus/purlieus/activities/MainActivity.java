@@ -2,6 +2,7 @@ package com.purlieus.purlieus.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.MenuItemCompat;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.microsoft.windowsazure.mobileservices.*;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
@@ -49,12 +51,28 @@ public class MainActivity extends AppCompatActivity {
 
         View contentMain = findViewById(R.id.main_content);
         LinearLayout health = (LinearLayout)contentMain.findViewById(R.id.health_linear_layout);
+        LinearLayout community = (LinearLayout)contentMain.findViewById(R.id.community_linear_layout);
+        LinearLayout books = (LinearLayout)contentMain.findViewById(R.id.books_linear_layout);
 
         health.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BloodDonationActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        community.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "This feature hasn't been implemented yet!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        books.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "This feature hasn't been implemented yet!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -106,10 +124,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+                drawerLayout.closeDrawers();
+
                 switch(item.getItemId()){
                     case R.id.nav_menu_profile:{
                         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                         startActivity(intent);
+                        break;
+                    }
+                    case R.id.nav_menu_about:{
+                        Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                        startActivity(intent);
+                        break;
                     }
                 }
                 return true;
