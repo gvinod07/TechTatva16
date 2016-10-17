@@ -1,0 +1,62 @@
+﻿<Page
+    x:Class="Tech_Tatva_16__Windows_10_.Views.CategoriesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tech_Tatva_16__Windows_10_.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Classes="using:Tech_Tatva_16__Windows_10_.Classes"
+    mc:Ignorable="d">
+
+    <Grid Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--TODO: Content should be placed within the following grid-->
+        <Grid Name="ContentRoot" Margin="0,9.5,5,0" Grid.Row="1">
+            <ScrollViewer>
+                <Viewbox HorizontalAlignment="Stretch">
+                    <Grid>
+                        <GridView Name="Categories" SelectionChanged="Categories_SelectionChanged">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VariableSizedWrapGrid MaximumRowsOrColumns="2" Orientation="Horizontal" HorizontalChildrenAlignment="Stretch">
+                                    </VariableSizedWrapGrid>
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="Classes:Category">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Ellipse Height="30" Width="30">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{x:Bind Image}" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock HorizontalAlignment="Center" Text="{x:Bind cname}" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="5" Grid.Row="1" TextWrapping="Wrap"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+
+                        </GridView>
+                    </Grid>
+                </Viewbox>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>
+

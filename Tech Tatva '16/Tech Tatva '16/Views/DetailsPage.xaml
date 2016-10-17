@@ -1,0 +1,112 @@
+﻿<Page
+    x:Class="Tech_Tatva__16.Views.DetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tech_Tatva__16.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{StaticResource BackgroundBrush}"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
+
+    <Grid x:Name="LayoutRoot" DataContext="{Binding}">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Title Panel -->
+        <StackPanel Margin="10,0,0,0">
+            <TextBlock Text="techtatva" FontSize="47" Margin="0,12,0,0" Foreground="{StaticResource AppAccentColorBrush}" FontFamily="Segoe WP" FontWeight="SemiLight"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Image Height="45" Source="{Binding Image}" Margin="10,6.5,10,15"/>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" Margin="0,6.5,0,0" FontSize="25" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" Foreground="{StaticResource AppAccentColorBrush}" VerticalAlignment="Center" />
+                        <TextBlock Margin="0,0,0,15" FontSize="25" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" Foreground="{StaticResource AppAccentColorBrush}" VerticalAlignment="Center" >
+                    <Run Text="Round" />
+                    <Run Text="{Binding Round}" />
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <Line Grid.Row="1" X1="0" X2="1" Stretch="Fill" Stroke="{StaticResource AppAccentColorBrush}" StrokeThickness="1" Margin="-10,3,0,0"/>
+
+                <!--TODO: Content should be placed within the following grid-->
+                <StackPanel Grid.Row="2" Margin="0,10,0,10">
+                    <TextBlock Text="{Binding Description}" FontSize="20" TextWrapping="Wrap" TextAlignment="Center" Margin="10,5,10,10"/>
+                    <Line X1="0" X2="1" Stretch="Fill" Stroke="{StaticResource AppAccentColorBrush}" StrokeThickness="1" Margin="-10,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" Margin="10,25,0,0" Orientation="Horizontal">
+                    <Image Source="/Assets/Icons/loc-icon.png" Height="45" Width="45"></Image>
+                    <TextBlock Text="{Binding Venue}" FontSize="25" Margin="10,0,0,0" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Row="4" Margin="10,0,0,0" Orientation="Horizontal">
+                    <Image Source="/Assets/Icons/time-icon.png" Height="45" Width="45"></Image>
+                    <TextBlock FontSize="25" Margin="10,0,0,0" VerticalAlignment="Center">
+                <Run Text="{Binding Stime}" />
+                <Run Text="to" />
+                <Run Text="{Binding Etime}" />
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Row="5" Margin="10,0,0,0" Orientation="Horizontal">
+                    <Image Source="/Assets/Icons/date-icon.png" Height="45" Width="45"></Image>
+                    <TextBlock Text="{Binding Date}" FontSize="25" Margin="10,0,0,0" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Row="6" Margin="10,0,0,0" Orientation="Horizontal">
+                    <Image Source="/Assets/Icons/group-icon.png" Height="45" Width="45"></Image>
+                    <TextBlock FontSize="25" Margin="10,0,0,0" VerticalAlignment="Center">
+                <Run Text="{Binding TeamSize}" />
+                <Run Text="per team" />
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Row="7" Margin="10,0,0,0" Orientation="Horizontal" Tapped="Contact_Tapped">
+                    <Image Source="/Assets/Icons/phone-icon.png" Height="45" Width="45"></Image>
+                    <TextBlock x:Name="Contact" Text="{Binding Contact}" FontSize="25" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="8" Margin="0,25,0,0">
+                    <Line X1="0" X2="1" Stretch="Fill" Stroke="{StaticResource AppAccentColorBrush}" StrokeThickness="1"/>
+                    <Button BorderThickness="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="Button_Click" DataContext="{Binding}">
+                        <Button.Content>
+                            <Grid DataContext="{Binding}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="/Assets/Icons/fav-icon.png" Height="35" Width="35" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="BookmarkText" Grid.Column="1" Text="bookmark event" FontSize="25" Margin="10,0,0,0" VerticalAlignment="Center" />
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                    <Line X1="0" X2="1" Stretch="Fill" Stroke="{StaticResource AppAccentColorBrush}" StrokeThickness="1"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>
