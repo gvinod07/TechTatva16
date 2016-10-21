@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/seek_tab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/donate_bg_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/padding_2x"
+            android:paddingBottom="@dimen/padding_2x"
+            android:paddingRight="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_default"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_weight="0"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_drop"
+                android:alpha="0.54"
+                android:layout_marginRight="@dimen/padding_2x"
+                android:layout_marginEnd="@dimen/padding_2x"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/typography_title"
+                android:text="@string/select_blood_group_recipient"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginRight="@dimen/padding_default"
+                android:layout_marginEnd="@dimen/padding_default"/>
+
+            <Spinner
+                android:layout_weight="0"
+                android:id="@+id/bg_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <View
+            android:id="@+id/divider_2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/donate_bg_layout"
+            android:background="@color/dividerColor"/>
+
+        <LinearLayout
+            android:id="@+id/donate_urgency_layout"
+            android:layout_below="@id/divider_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/padding_2x"
+            android:paddingBottom="@dimen/padding_2x"
+            android:paddingRight="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_default">
+
+            <ImageView
+                android:layout_weight="0"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_urgent"
+                android:alpha="0.54"
+                android:layout_marginRight="@dimen/padding_2x"
+                android:layout_marginEnd="@dimen/padding_2x"/>
+
+            <LinearLayout
+
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/typography_title"
+                    android:text="@string/set_urgency"
+                    android:textColor="@color/black"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginRight="@dimen/padding_default"
+                    android:layout_marginEnd="@dimen/padding_default"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_default"
+                    android:text="@string/description_edit_urgency"
+                    android:textSize="@dimen/typography_body"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/urgent_seek_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:clipToPadding="false"
+            android:padding="@dimen/padding_default">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/continueButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/continue_seek"
+                android:textColor="@color/white"
+                android:background="@drawable/selected_button_red"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/seek_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/no_donors_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_default"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seekers_unavailable"
+            android:textSize="@dimen/typography_title"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seeker_notified"
+            android:textSize="@dimen/typography_body"
+            android:layout_marginTop="@dimen/padding_default"
+            android:fontFamily="sans-serif-medium"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

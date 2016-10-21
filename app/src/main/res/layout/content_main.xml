@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <LinearLayout
+        android:id="@+id/health_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/padding_default"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:paddingBottom="@dimen/padding_default">
+
+        <ImageView
+            android:layout_weight="0"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_health"
+            android:tint="@color/red"
+            android:layout_marginEnd="@dimen/padding_2x"
+            android:layout_marginRight="@dimen/padding_2x"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/health"
+                android:textSize="@dimen/typography_title"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_default"
+                android:text="@string/description_health"
+                android:textSize="@dimen/typography_body"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_weight="0"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:src="@drawable/ic_right"
+            android:tint="?attr/colorPrimary"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider_1"
+        android:layout_below="@id/health_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/dividerColor"/>
+
+    <LinearLayout
+        android:id="@+id/community_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/padding_default"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/padding_default"
+        android:layout_below="@id/divider_1"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size"
+            android:layout_weight="0"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_community"
+            android:tint="@color/slightlyDarkerBlue"
+            android:layout_marginEnd="@dimen/padding_2x"
+            android:layout_marginRight="@dimen/padding_2x"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/community"
+                android:textSize="@dimen/typography_title"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_default"
+                android:text="@string/description_community"
+                android:textSize="@dimen/typography_body"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_weight="0"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:src="@drawable/ic_right"
+            android:tint="?attr/colorPrimary"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider_2"
+        android:layout_below="@id/community_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/dividerColor"/>
+
+    <LinearLayout
+        android:id="@+id/books_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/padding_default"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/padding_default"
+        android:layout_below="@id/divider_2"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_weight="0"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_books"
+            android:tint="@color/green_dark"
+            android:layout_marginEnd="@dimen/padding_2x"
+            android:layout_marginRight="@dimen/padding_2x"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/books"
+                android:textSize="@dimen/typography_title"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_default"
+                android:text="@string/description_books"
+                android:textSize="@dimen/typography_body"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_weight="0"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:tint="?attr/colorPrimary"
+            android:src="@drawable/ic_right"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
