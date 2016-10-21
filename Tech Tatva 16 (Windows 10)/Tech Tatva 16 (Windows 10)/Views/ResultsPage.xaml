@@ -1,0 +1,98 @@
+﻿<Page
+    x:Class="Tech_Tatva_16__Windows_10_.Views.ResultsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tech_Tatva_16__Windows_10_.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Classes="using:Tech_Tatva_16__Windows_10_.Classes"
+    mc:Ignorable="d">
+
+    <Grid Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Results" Style="{StaticResource HeaderTextBlockStyle}" Margin="10"/>
+
+        <StackPanel Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Name="PPanel">
+            <ProgressRing IsActive="True" HorizontalAlignment="Center" Foreground="{StaticResource AppAccentColorBrush}"/>
+            <TextBlock Text="Poking Voldemort's Nose.." HorizontalAlignment="Center" Margin="10" Style="{StaticResource BaseTextBlockStyle}"/>
+        </StackPanel>
+
+        <StackPanel Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Name="NoResult" Visibility="Collapsed">
+            <TextBlock Text="No Results have arrived :(" HorizontalAlignment="Center" Margin="10" Style="{StaticResource SubheaderTextBlockStyle}"/>
+        </StackPanel>
+
+        <!--TODO: Content should be placed within the following grid-->
+        <ScrollViewer Grid.Row="1" VerticalScrollMode="Enabled">
+
+            <StackPanel Name="ContentRoot" Margin="0,9.5,5,0" >
+
+                <ListView  Name="Results" ItemsSource="{x:Bind Result}" SelectionMode="Single" SelectionChanged="Event_Clicked" Margin="0,10,0,0" ItemContainerStyle="{StaticResource AccentColoredListView}" Loaded="Results_Loaded">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="Classes:Results">
+                            <Grid Margin="0,10,0,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <StackPanel  Grid.Column="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse  Height="40" Width="40" >
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{x:Bind Image}"/>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="{x:Bind EventName}" Style="{StaticResource TitleTextBlockStyle}" Margin="20,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" x:Name="Table" Visibility="Collapsed">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Team ID" FontWeight="SemiLight" FontSize="25" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="Round" FontWeight="SemiLight" FontSize="25" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2"  Text="Position" FontWeight="SemiLight" FontSize="25" HorizontalAlignment="Center"/>
+                                    </Grid>
+
+                                    <!--TODO: Content should be placed within the following grid-->
+                                    <ListView Grid.Row="2" VerticalAlignment="Top" DataContext="{x:Bind Teams}" ItemsSource="{x:Bind Teams}" IsItemClickEnabled="False" SelectionMode="None">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="Classes:Team">
+                                                <Grid Width="{Binding ElementName=Table, Path=ActualWidth}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{x:Bind Teamid}" FontSize="20" HorizontalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" FontSize="20" Text="{x:Bind Round}" HorizontalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="2" FontSize="20" Text="{x:Bind Position}" HorizontalAlignment="Center"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+
+</Page>

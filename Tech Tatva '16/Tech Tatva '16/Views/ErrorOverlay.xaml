@@ -1,0 +1,42 @@
+﻿<UserControl
+    x:Class="Tech_Tatva__16.Views.ErrorOverlay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tech_Tatva__16.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Background="Transparent">
+
+    <Grid Background="Black" Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image Source="/Assets/error.png" Height="300"></Image>
+
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center" TextAlignment="Center" FontSize="60" FontFamily="Segoe WP" FontWeight="Light" >
+            <TextBlock.Text>
+                oops!
+            </TextBlock.Text>
+        </TextBlock>
+
+        <TextBlock Margin="10" Grid.Row="2" HorizontalAlignment="Center" TextAlignment="Center" FontSize="25" TextWrapping="Wrap" FontFamily="Segoe WP" FontWeight="Light">
+            <TextBlock.Text>
+                an error occured while connecting to the server.
+            </TextBlock.Text>
+        </TextBlock>
+
+        <TextBlock Margin ="10" Grid.Row="3" HorizontalAlignment="Center" TextAlignment="Center" FontSize="25" TextWrapping="Wrap" FontFamily="Segoe WP" FontWeight="Light">
+            <TextBlock.Text>
+                please check the connection or try again later.
+            </TextBlock.Text>
+        </TextBlock>
+
+        <AppBarButton Grid.Row="4" HorizontalAlignment="Center" Icon="Refresh" Tapped="Refresh">
+            
+        </AppBarButton>
+    </Grid>
+</UserControl>

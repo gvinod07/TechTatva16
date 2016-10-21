@@ -1,0 +1,4 @@
+MainPackage=C:\Users\Gautham Vinod\Documents\Visual Studio 2015\Projects\TT-16-Windows\Tech Tatva '16\Tech Tatva '16\bin\ARM\Release\Tech Tatva '16_1.1.0.5_ARM.appx
+SymbolPackage=C:\Users\Gautham Vinod\Documents\Visual Studio 2015\Projects\TT-16-Windows\Tech Tatva '16\Tech Tatva '16\AppPackages\Tech Tatva '16_1.1.0.5_Test\Tech Tatva '16_1.1.0.5_ARM.appxsym
+ResourcePack=C:\Users\Gautham Vinod\Documents\Visual Studio 2015\Projects\TT-16-Windows\Tech Tatva '16\Tech Tatva '16\bin\ARM\Release\Tech Tatva '16_1.1.0.5_scale-100.appx
+ResourcePack=C:\Users\Gautham Vinod\Documents\Visual Studio 2015\Projects\TT-16-Windows\Tech Tatva '16\Tech Tatva '16\bin\ARM\Release\Tech Tatva '16_1.1.0.5_scale-140.appx

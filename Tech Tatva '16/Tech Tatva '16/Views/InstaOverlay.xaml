@@ -1,0 +1,69 @@
+﻿<UserControl
+    x:Class="Tech_Tatva__16.Views.InstaOverlay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tech_Tatva__16.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    
+    <Grid Margin="10" x:Name="LayoutRoot" Background="Black">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock FontSize="50" Foreground="{StaticResource AppAccentColorBrush}" FontFamily="Segoe WP" FontWeight="SemiLight">
+            <TextBlock.Text>
+                #techtatva16
+            </TextBlock.Text>
+        </TextBlock>
+
+        <ScrollViewer Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
+                    <Ellipse Height="30" Width="30">
+                        <Ellipse.Fill>
+                            <ImageBrush x:Name="Propic"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock x:Name="User_Name" Margin="10,0,0,0" FontSize="25" VerticalAlignment="Center" Text="{Binding user.username}" FontFamily="Segoe WP" FontWeight="Light" />
+                </StackPanel>
+
+                <Image x:Name="Img" Grid.Row="1" ></Image>
+
+                <TextBlock Grid.Row="2" x:Name="Caption" FontSize="20" Text="{Binding caption.text}" FontFamily="Segoe WP" FontWeight="SemiLight" TextWrapping="Wrap"/>
+
+                <StackPanel Grid.Row="3">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="40" Width="40" Source="/Assets/Icons/insta-like.png"/>
+                        <TextBlock x:Name="Likes" Margin="0,5,0,5" FontSize="20" FontFamily="Segoe WP" FontWeight="Light">
+                <Run Text="{Binding likes.count}" />
+                <Run Text=" likes" />
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Image Height="40" Width="40" Source="/Assets/Icons/insta-comment.png" />
+
+                        <TextBlock x:Name="Comments"  Margin="0,5,0,5" FontSize="20" FontFamily="Segoe WP" FontWeight="Light">
+                <Run Text="{Binding comments.count}" />
+                <Run Text=" comments" />
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+
+</UserControl>

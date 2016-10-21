@@ -1,0 +1,171 @@
+﻿<Page
+    x:Class="Tech_Tatva__16.Views.CategoriesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tech_Tatva__16.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Panel -->
+        <StackPanel Grid.Row="0" Margin="19,0,0,0">
+            <TextBlock Text="categories" FontFamily="Segoe WP" FontSize="60" FontWeight="SemiLight" VerticalAlignment="Center" Foreground="{StaticResource AppAccentColorBrush}"/>
+        </StackPanel>
+
+        <!--TODO: Content should be placed within the following grid-->
+        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListView x:Name="Categories_ListView" SelectionChanged="ListView_SelectionChanged">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,5,1,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Height="60" Width="60">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding Image}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="{Binding cname}" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <!--<ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-cryptoss.png" Height="60"/>
+                            <TextBlock Text="Cryptoss" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-robotrek.png" Height="60"/>
+                            <TextBlock Text="Robotrek" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-alacrity.png" Height="60"/>
+                            <TextBlock Text="Alacrity" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-constructure.png" Height="60"/>
+                            <TextBlock Text="Constructure" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-bizzmaestro.png" Height="60"/>
+                            <TextBlock Text="Bizzmaestro" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-epsilon.png" Height="60"/>
+                            <TextBlock Text="Epsilon" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-airborne.png" Height="60"/>
+                            <TextBlock Text="Airborne" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-mechanize.png" Height="60"/>
+                            <TextBlock Text="Mechanize" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-cheminova.png" Height="60"/>
+                            <TextBlock Text="Cheminova" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-kraftwagen.png" Height="60"/>
+                            <TextBlock Text="Kraftwagen" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-electrific.png" Height="60"/>
+                            <TextBlock Text="Electrific" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-mechatron.png" Height="60"/>
+                            <TextBlock Text="Mechatron" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-gaming.png" Height="60"/>
+                            <TextBlock Text="Gaming" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-cosmicon.png" Height="60"/>
+                            <TextBlock Text="Cosmiccon" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-open events.png" Height="60"/>
+                            <TextBlock Text="Open Events" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-acumen.png" Height="60"/>
+                            <TextBlock Text="Acumen" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,1,5">
+                            <Image Source="/Assets/Category Icons/TT-turing.png" Height="60"/>
+                            <TextBlock Text="Turing" FontFamily="Segoe WP" FontWeight="Light" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </ListViewItem>-->
+                </ListView>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>
