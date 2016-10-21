@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import com.purlieus.purlieus.R;
 
 /**
- * Created by anurag on 7/10/16.
+ *    xdfsdsjdvnjdnvjsnvjsnvCreated by anurag on 7/10/16.
  */
 public class AboutActivity extends AppCompatActivity {
 
